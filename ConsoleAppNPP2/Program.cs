@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Diagnostics;
+using System.Security.Cryptography;
 
 class Program
 	{
@@ -19,6 +20,10 @@ class Program
 			// SegmentHasher Method
 			static void SegmentHasher(string filePath, int segmentSize)
 				{
+				Stopwatch stopWatch = new Stopwatch();
+
+				stopWatch.Start();
+
 				using(FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
 					{
 					using(SHA256 sha256 = SHA256.Create())
@@ -43,6 +48,10 @@ class Program
 						);
 						}
 					}
+				stopWatch.Stop();
+
+				Console.WriteLine($"Elapsed time is {stopWatch.ElapsedMilliseconds}");
+
 				}
 			Console.WriteLine("Continue? y/n");
 			string keepGoing = Console.ReadLine();
