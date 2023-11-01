@@ -21,13 +21,22 @@ class Program
 					{
 					byte[] buffer = new byte[segmentSize];
 					int bytesRead;
+					long fileSize = fileStream.Length;
 
-					while((bytesRead=fileStream.Read(buffer, 0, buffer.Length))>0)
+					Parallel.For(0, (int)(fileSize/segmentSize), i =>
 						{
-						byte[] segmentHash = sha256.ComputeHash(buffer, 0, bytesRead);
-						string segmentHashHex = BitConverter.ToString(segmentHash).ToLower();
-						Console.WriteLine($"Segment Hash: {segmentHashHex}");
+							// Monopoly 
+							lock(fileStream)
+								{
+								fileStream.Seek(i * segmentSize, SeekOrigin.Begin);
+								bytesRead=fileStream.Read(buffer, 0, buffer.Length);
+								}
+								byte[] segmentHash = sha256.ComputeHash(buffer, 0, bytesRead);
+								string segmentHashHex = BitConverter.ToString(segmentHash).ToLower();
+								Console.WriteLine($"Segment Hash: {segmentHashHex}");
+
 						}
+					);
 					}
 				}
 			}
