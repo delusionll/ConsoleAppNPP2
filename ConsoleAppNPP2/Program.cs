@@ -12,7 +12,7 @@ class Program
 
 		SegmentHasher(inputFilePath, inputSegmentSize);
 
-		// SegmentHasherMethod
+		// SegmentHasher Method
 		static void SegmentHasher(string filePath, int segmentSize)
 			{
 			using(FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
@@ -25,7 +25,7 @@ class Program
 					while((bytesRead=fileStream.Read(buffer, 0, buffer.Length))>0)
 						{
 						byte[] segmentHash = sha256.ComputeHash(buffer, 0, bytesRead);
-						string segmentHashHex = BitConverter.ToString(segmentHash).Replace("-", "").ToLower();
+						string segmentHashHex = BitConverter.ToString(segmentHash).ToLower();
 						Console.WriteLine($"Segment Hash: {segmentHashHex}");
 						}
 					}
