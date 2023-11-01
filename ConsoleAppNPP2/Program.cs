@@ -5,7 +5,6 @@ class Program
 	{
 	static void Main(string[] args)
 		{
-
 		Console.WriteLine("arg0 - <FilePath> (C:/...), arg1 - <SegmentSize> in bytes");
 
 		while(true)
